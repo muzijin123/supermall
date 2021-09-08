@@ -35,17 +35,27 @@
         pullUpLoad: this.pullUpLoad,
         observeDOM:true
       })
-      setTimeout(() => {
+      /*setTimeout(() => {
         this.$nextTick(() => {
           this.scroll.refresh()
+          console.log('---')
         })
-      }, 1000)
-      this.scroll.on('scroll',(position)=>{
-        this.$emit('scroll',position)
-      })
-      this.scroll.on('pullingUp',()=>{
-        this.$emit('pullingUp')
-      })
+      }, 2000)*/
+      /*const refresh = this.debounce(this.scroll.refresh,50)
+
+      this.$nextTick(() =>{
+        refresh()
+      })*/
+      if(this.probeType === 2 || this.probeType === 3){
+        this.scroll.on('scroll',(position)=>{
+          this.$emit('scroll',position)
+        })
+      }
+      if(this.pullUpLoad){
+        this.scroll.on('pullingUp',()=>{
+          this.$emit('pullingUp')
+        })
+      }
     },
     methods:{
       scrollTo(x,y,time=500){
@@ -53,6 +63,9 @@
       },
       finishPullUp(){
         this.scroll.finishPullUp();
+      },
+      refresh(){
+        this.scroll.refresh();
       }
     }
   }
